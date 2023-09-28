@@ -1,0 +1,9 @@
+openapi: 3.0.3
+
+info:
+  title: Swagger Demo API
+  description: API description
+  version: 0.0.0
+servers:
+  - url: 'http://localhost:3000/api/v1'
+    description: Customers service version 1
