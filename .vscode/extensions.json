@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "jdinhlife.gruvbox",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "pflannery.vscode-versionlens",
+    "streetsidesoftware.code-spell-checker",
+    "pkief.material-icon-theme"
+  ]
+}
