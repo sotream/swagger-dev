@@ -4,6 +4,9 @@ const log4js = require('log4js');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yaml');
 
+require('./utils/init');
+require('./utils/loggerInit');
+
 const { app } = require('./server');
 
 const log = log4js.getLogger('main');

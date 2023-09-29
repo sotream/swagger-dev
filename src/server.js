@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const log4js = require('log4js');
 
+const { customersRouter } = require('./routers/customers');
+
 const app = express();
 const log = log4js.getLogger('server');
 
@@ -25,6 +27,8 @@ app.get('/version', (res) => {
     },
   });
 });
+
+app.use('/api/v1/customers', customersRouter);
 
 module.exports = {
   app,
