@@ -35,6 +35,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
 
+    get:
+      summary: Get all customers
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/pageParam'
+      responses:
+        200:
+          description: All customers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomersResponse'
+        400:
+          description: Get all customers error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
 components:
   schemas:
     Customer:
@@ -99,6 +120,49 @@ components:
           email: jdou@example.com
           created: '2023-10-20T15:00:00.000Z'
 
+    CustomersResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          enum:
+            - 'ok'
+        data:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Customer'
+              - type: object
+                required:
+                  - id
+                  - name
+                  - email
+                  - created
+                  - updated
+                properties:
+                  id:
+                    type: integer
+                    description: The customer id
+                  created:
+                    type: string
+                    format: date-time
+                    description: The customer creation date-time
+                  updated:
+                    type: string
+                    format: date-time
+                    description: The customer update date-time
+      example:
+        status: 'ok'
+        data:
+          - id: 1
+            name: John Dou
+            email: jdou@example.com
+            created: '2023-10-20T15:00:00.000Z'
+            updated: '2023-10-20T15:00:00.000Z'
+
     BaseErrorResponse:
       type: object
       required:
@@ -125,4 +189,19 @@ components:
             status: 'error'
             data:
               message: 'Customer params are not valid'
-        
+  
+  parameters:
+    sizeParam:
+      name: size
+      in: query
+      schema:
+        type: integer
+      required: false
+      description: Customer query page size
+    pageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+      required: false
+      description: Customer query page number

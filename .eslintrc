@@ -15,7 +15,11 @@
   "rules": {
     "import/no-dynamic-require": "off",
     "global-require": "off",
-    "arrow-body-style": ["error", "as-needed"],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ],
     "implicit-arrow-linebreak": ["error", "below"]
   }
 }
