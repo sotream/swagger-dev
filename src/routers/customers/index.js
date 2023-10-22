@@ -20,7 +20,7 @@ customersRouter.post('/', async (req, res) => {
 
     const customer = await db.Customer.create(customerToCreate);
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'ok',
       data: {
         id: customer.id,

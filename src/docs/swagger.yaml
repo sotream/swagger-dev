@@ -7,3 +7,122 @@ info:
 servers:
   - url: 'http://localhost:3000/api/v1'
     description: Customers service version 1
+
+paths:
+  /customers:
+    post:
+      summary: Create customer
+      tags:
+        - Customers
+      requestBody:
+        description: Sign up **customer**
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequestBody'
+      responses:
+        201:
+          description: Created customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+        400:
+          description: Customer validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The customer full name
+        email:
+          type: string
+          description: The customer email
+      example:
+        name: John Dou
+        email: jdou@example.com
+
+    CustomerRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Customer'
+        - type: object
+          properties:
+            password:
+              type: string
+              minLength: 8
+              description: The customer password
+          example:
+            name: John Dou
+            email: jdou@example.com
+            password: 'super-password'
+
+    CustomerResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          enum:
+            - 'ok'
+        data:
+          allOf:
+            - $ref: '#/components/schemas/Customer'
+            - type: object
+              required:
+                - id
+                - name
+                - email
+                - created
+              properties:
+                id:
+                  type: integer
+                  description: The customer id
+                created:
+                  type: string
+                  format: date-time
+                  description: The customer creation date-time
+      example:
+        status: 'ok'
+        data:
+          id: 1
+          name: John Dou
+          email: jdou@example.com
+          created: '2023-10-20T15:00:00.000Z'
+
+    BaseErrorResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          enum:
+            - error
+          description: Request status
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Error message
+
+    BadRequestResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseErrorResponse'
+        - type: object
+          example:
+            status: 'error'
+            data:
+              message: 'Customer params are not valid'
+        
