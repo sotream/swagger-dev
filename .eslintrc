@@ -21,6 +21,14 @@
       { "requireReturnForObjectLiteral": true }
     ],
     "implicit-arrow-linebreak": ["error", "below"],
-    "object-curly-newline": ["error", { "multiline": true }]
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": true },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+      }
+    ]
   }
 }

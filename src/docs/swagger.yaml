@@ -148,7 +148,7 @@ components:
                 updated:
                   type: string
                   format: date-time
-                  description: The customer updated date-time
+                  description: The customer update date-time
       example:
         status: 'ok'
         data:

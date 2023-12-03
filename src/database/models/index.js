@@ -8,6 +8,7 @@ const modelPath = `${process.cwd()}/src/database/models/`;
 const basename = path.basename(`${__dirname}/../../database/models/index.js`);
 const config = require(path.resolve(`${__dirname}/../config/config.js`))[env];
 
+// eslint-disable-next-line object-curly-newline
 const db = {};
 
 let sequelize;

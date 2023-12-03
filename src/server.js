@@ -11,17 +11,25 @@ log.level = 'debug';
 
 app.disable('x-powered-by');
 
-app.use(bodyParser.json({ limit: '1kb' }));
+app.use(
+  bodyParser.json({
+    limit: '1kb',
+  }),
+);
 
 app.get('/version', (res) => {
   log.debug('/version');
 
   res.status(200).json({
     status: 'ok',
-    data: { version: '1.0.0' },
+    data: {
+      version: '1.0.0',
+    },
   });
 });
 
 app.use('/api/v1/customers', customersRouter);
 
-module.exports = { app };
+module.exports = {
+  app,
+};

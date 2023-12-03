@@ -3,10 +3,7 @@ const log4js = require('log4js');
 const bcrypt = require('bcrypt');
 
 const db = require('../../database/models');
-const {
-  getUpdateCustomerParams,
-  formatCustomer,
-} = require('../../utils/customer');
+const { getUpdateCustomerParams, formatCustomer } = require('../../utils/customer');
 
 const customersRouter = express.Router();
 const log = log4js.getLogger('customersRouter');
@@ -36,7 +33,9 @@ customersRouter.post('/', async (req, res) => {
 
     res.status(error.code || 400).json({
       status: 'error',
-      data: { message: error.message || 'Internal error' },
+      data: {
+        message: error.message || 'Internal error',
+      },
     });
   }
 });
@@ -45,15 +44,12 @@ customersRouter.get('/', async (req, res) => {
   const defaultPageSize = 25;
   const defaultPageNumber = 1;
 
-  log.info(
-    `Get all customers request query params ${JSON.stringify(
-      req.query,
-    )} default page size ${defaultPageSize} default page number ${defaultPageNumber}`,
-  );
+  log.info(`Get all customers request query params ${JSON.stringify(req.query)} default page size ${defaultPageSize} default page number ${defaultPageNumber}`);
 
   try {
     const { size = defaultPageSize, page = defaultPageNumber } = req.query;
     const rawCustomers = await db.Customer.findAll({
+      // eslint-disable-next-line object-curly-newline
       where: {},
       limit: Number(size),
       offset: (Number(page) - 1) * Number(size),
@@ -66,10 +62,7 @@ customersRouter.get('/', async (req, res) => {
       data: customers,
     };
 
-    log.trace(
-      'All customers response',
-      JSON.stringify(getAllCustomersResponse),
-    );
+    log.trace('All customers response', JSON.stringify(getAllCustomersResponse));
 
     res.status(200).json(getAllCustomersResponse);
   } catch (error) {
@@ -77,7 +70,9 @@ customersRouter.get('/', async (req, res) => {
 
     res.status(error.code || 400).json({
       status: 'error',
-      data: { message: error.message || 'Internal error' },
+      data: {
+        message: error.message || 'Internal error',
+      },
     });
   }
 });
@@ -87,14 +82,13 @@ customersRouter.put('/:customerId', async (req, res) => {
     const { customerId } = req.params;
     const updateParams = getUpdateCustomerParams(req.body);
 
-    const [updateResult, updatedCustomer] = await db.Customer.update(
-      updateParams,
-      {
-        where: { id: customerId },
-        returning: true,
-        raw: true,
+    const [updateResult, updatedCustomer] = await db.Customer.update(updateParams, {
+      where: {
+        id: customerId,
       },
-    );
+      returning: true,
+      raw: true,
+    });
 
     if (updateResult !== 1 || updatedCustomer.length !== 1) {
       throw new Error(`Customer ${customerId} not updated`);
@@ -113,9 +107,13 @@ customersRouter.put('/:customerId', async (req, res) => {
 
     res.status(error.code || 400).json({
       status: 'error',
-      data: { message: error.message || 'Internal error' },
+      data: {
+        message: error.message || 'Internal error',
+      },
     });
   }
 });
 
-module.exports = { customersRouter };
+module.exports = {
+  customersRouter,
+};

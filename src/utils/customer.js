@@ -1,4 +1,5 @@
 const getUpdateCustomerParams = (data) => {
+  // eslint-disable-next-line object-curly-newline
   const updateParams = {};
 
   if (!data || Array.isArray(data) || typeof data !== 'object') {
