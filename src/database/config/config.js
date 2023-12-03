@@ -6,6 +6,7 @@ module.exports = {
     dialect: 'postgres',
     dialectModule: require('pg'),
     host: process.env.POSTGRES_HOST,
+    logging: false,
   },
   production: {
     database: process.env.POSTGRES_DATABASE,
@@ -14,6 +15,7 @@ module.exports = {
     dialect: 'postgres',
     dialectModule: require('pg'),
     host: process.env.POSTGRES_HOST,
+    logging: false,
   },
   test: {
     database: process.env.POSTGRES_DATABASE,
@@ -22,5 +24,6 @@ module.exports = {
     dialect: 'postgres',
     dialectModule: require('pg'),
     host: process.env.POSTGRES_HOST,
+    logging: false,
   },
 };

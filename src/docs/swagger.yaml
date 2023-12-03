@@ -56,6 +56,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
 
+  /customers/{customerId}:
+    put:
+      summary: Update customer
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/customerId'
+      requestBody:
+        description: Update customer request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerRequestBody'
+      responses:
+        200:
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+        400:
+          description: Customer validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+
 components:
   schemas:
     Customer:
@@ -85,6 +113,10 @@ components:
             email: jdou@example.com
             password: 'super-password'
 
+    UpdateCustomerRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Customer'
+
     CustomerResponse:
       type: object
       required:
@@ -104,6 +136,7 @@ components:
                 - name
                 - email
                 - created
+                - updated
               properties:
                 id:
                   type: integer
@@ -112,6 +145,10 @@ components:
                   type: string
                   format: date-time
                   description: The customer creation date-time
+                updated:
+                  type: string
+                  format: date-time
+                  description: The customer updated date-time
       example:
         status: 'ok'
         data:
@@ -119,6 +156,7 @@ components:
           name: John Dou
           email: jdou@example.com
           created: '2023-10-20T15:00:00.000Z'
+          updated: '2023-10-20T15:00:00.000Z'
 
     CustomersResponse:
       type: object
@@ -205,3 +243,10 @@ components:
         type: integer
       required: false
       description: Customer query page number
+    customerId:
+      name: customerId
+      in: path
+      schema:
+        type: string
+      required: true
+      description: Customer id

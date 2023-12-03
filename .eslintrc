@@ -20,6 +20,7 @@
       "as-needed",
       { "requireReturnForObjectLiteral": true }
     ],
-    "implicit-arrow-linebreak": ["error", "below"]
+    "implicit-arrow-linebreak": ["error", "below"],
+    "object-curly-newline": ["error", { "multiline": true }]
   }
 }

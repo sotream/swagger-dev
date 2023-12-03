@@ -16,9 +16,7 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const file = fs.readFileSync(path.resolve('./src/docs/swagger.yaml'), 'utf-8');
 const swaggerDocument = YAML.parse(file);
 
-const options = {
-  explorer: false,
-};
+const options = { explorer: false };
 
 app.use('/docs/v1', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
