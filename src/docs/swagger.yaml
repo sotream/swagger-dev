@@ -84,6 +84,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestResponse'
 
+    delete:
+      summary: Delete customer
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        204:
+          description: Delete customer
+        404:
+          description: Delete customer error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+
 components:
   schemas:
     Customer:
@@ -227,6 +243,15 @@ components:
             status: 'error'
             data:
               message: 'Customer params are not valid'
+
+    NotFoundResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseErrorResponse'
+        - type: object
+          example:
+            status: 'error'
+            data:
+              message: 'Customer not found'
   
   parameters:
     sizeParam:

@@ -114,6 +114,41 @@ customersRouter.put('/:customerId', async (req, res) => {
   }
 });
 
+customersRouter.delete('/:customerId', async (req, res) => {
+  try {
+    const { customerId } = req.params;
+
+    log.info('Delete customer', customerId);
+
+    const deleteResult = await db.Customer.destroy({
+      where: {
+        id: customerId,
+      },
+    });
+
+    if (deleteResult !== 1) {
+      const error = new Error(`Customer ${customerId} not found`);
+
+      error.code = 404;
+
+      throw error;
+    }
+
+    log.trace(`Customer ${customerId} successfully deleted`);
+
+    res.sendStatus(204);
+  } catch (error) {
+    log.error('Delete customer error', error);
+
+    res.status(error.code || 400).json({
+      status: 'error',
+      data: {
+        message: error.message || 'Internal error',
+      },
+    });
+  }
+});
+
 module.exports = {
   customersRouter,
 };
